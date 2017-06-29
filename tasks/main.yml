@@ -1,0 +1,3 @@
+---
+- include: docker.yml
+  when: docker_enabled
