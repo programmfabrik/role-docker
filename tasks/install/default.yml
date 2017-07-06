@@ -5,24 +5,26 @@
     state: installed
     update_cache: no
     install_recommends: no
-  with_items: [apt-transport-https, ca-certificates, curl, gnupg2, software-properties-common]
+  with_items: '{{ docker_deps }}'
   loop_control:
     loop_var: pkg_item
 
 - name: add repository key
   apt_key:
-    url: https://download.docker.com/linux/debian/gpg
+    url: https://download.docker.com/linux/{{ ansible_distribution }}/gpg
     id: 0EBFCD88
 
 - name: add repository
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution }} {{ ansible_lsb.codename }} stable
   notify: update apt caches
+
+- meta: flush_handlers
 
 - name: install docker
   apt:
     pkg: docker-ce
     state: installed
     update_cache: no
-    install_recommends: no
+    install_recommends: yes
   notify: restart docker
