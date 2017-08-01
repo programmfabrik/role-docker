@@ -10,6 +10,7 @@ Example play
 - hosts: all
   vars:
     docker_enabled: yes
+    docker_compose_version: 1.14.0
   roles:
     blunix.role-docker
 ```

@@ -11,12 +11,12 @@
 
 - name: add repository key
   apt_key:
-    url: https://download.docker.com/linux/{{ ansible_distribution }}/gpg
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
     id: 0EBFCD88
 
 - name: add repository
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution }} {{ ansible_lsb.codename }} stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_lsb.codename }} stable
   notify: update apt caches
 
 - meta: flush_handlers
@@ -28,3 +28,12 @@
     update_cache: no
     install_recommends: yes
   notify: restart docker
+
+# Please note that you need to mount /tmp with exec permissions! http://zindo.info/docker-compose-error-while-loading-libz-so-1.html
+- name: install docker-compose
+  get_url:
+   url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
+   dest: /usr/local/bin/docker-compose
+   owner: root
+   group: root
+   mode: 0755
