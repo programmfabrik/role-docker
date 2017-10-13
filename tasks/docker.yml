@@ -1,13 +1,14 @@
----
-- include_vars: "{{ var_item }}"
+- name: include distro vars
+  include_vars: '{{ vars_item }}'
   with_first_found:
     - "{{ ansible_distribution }}.{{ ansible_lsb.codename }}.yml"
     - "{{ ansible_distribution }}.yml"
     - "default.yml"
   loop_control:
-    loop_var: var_item
+    loop_var: vars_item
 
-- include: "{{ distro_installer }}"
+- name: include distro installer
+  include: "{{ distro_installer }}"
   with_first_found:
     - "install/{{ ansible_distribution }}.{{ ansible_lsb.codename }}.yml"
     - "install/{{ ansible_distribution }}.yml"
@@ -15,4 +16,3 @@
 
   loop_control:
     loop_var: distro_installer
-
