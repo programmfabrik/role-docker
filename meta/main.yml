@@ -10,7 +10,7 @@ galaxy_info:
     - jessie
 
   galaxy_tags:
-    - blunix
-    - docker
+  - blunix
+  - docker
 
 dependencies: []
