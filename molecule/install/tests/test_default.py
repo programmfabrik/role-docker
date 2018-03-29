@@ -21,3 +21,7 @@ def test_service(Service):
 
     assert s.is_enabled
     assert s.is_running
+
+def test_docker_hello_world(host):
+    assert host.run("docker run -i --rm hello-world").rc == 0
+    assert host.run("docker-compose status").rc == 1
