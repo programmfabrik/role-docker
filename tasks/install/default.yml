@@ -1,7 +1,7 @@
 - name: install docker deps
   apt:
     pkg: "{{ pkg_item }}"
-    state: installed
+    state: present
     update_cache: no
     install_recommends: no
   with_items: '{{ docker_deps }}'
@@ -27,12 +27,13 @@
 - name: install docker
   apt:
     pkg: docker-ce
-    state: installed
+    state: present
     update_cache: no
     install_recommends: yes
   notify: restart docker
 
-# Please note that you need to mount /tmp with exec permissions! http://zindo.info/docker-compose-error-while-loading-libz-so-1.html
+# Please note that you need to mount /tmp with exec permissions!
+# -> http://zindo.info/docker-compose-error-while-loading-libz-so-1.html
 - name: install docker-compose
   get_url:
     url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
