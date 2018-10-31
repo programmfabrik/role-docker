@@ -1,12 +1,9 @@
 - name: Installing dependencies
   apt:
-    pkg: "{{ docker_dep_item }}"
+    pkg: "{{ docker_deps }}"
     state: present
     update_cache: no
     install_recommends: no
-  with_items: '{{ docker_deps }}'
-  loop_control:
-    loop_var: docker_dep_item
 
 - name: Adding repository key
   apt_key:
