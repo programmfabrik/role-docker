@@ -29,5 +29,6 @@
   notify: restart docker
 
 - name: Installing docker-compose
+  when: docker_compose_enabled
   package:
     name: docker-compose
