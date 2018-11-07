@@ -26,4 +26,7 @@ def test_service(host):
 
 def test_docker_hello_world(host):
     assert host.run("docker run -i --rm hello-world").rc == 0
-    assert host.run("docker-compose status").rc == 1
+
+
+def test_docker_compose(host):
+    assert not host.file("/usr/bin/docker-compose").exists

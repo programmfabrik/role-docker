@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  vars:
+    docker_compose_enabled: yes
+
+  roles:
+    - role: role-docker
