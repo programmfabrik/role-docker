@@ -20,6 +20,7 @@
   notify: update apt caches
 
 - name: configure APT preferences for version pinning
+  when: not docker_version == ""
   template:
     src: etc/apt/preferences.d/docker.j2
     dest: /etc/apt/preferences.d/docker
