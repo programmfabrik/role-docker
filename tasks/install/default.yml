@@ -19,12 +19,17 @@
       stable
   notify: update apt caches
 
-- meta: flush_handlers
+- name: configure APT preferences for version pinning
+  template:
+    src: etc/apt/preferences.d/docker.j2
+    dest: /etc/apt/preferences.d/docker
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Installing docker
   apt:
     pkg: docker-ce
-    update_cache: no
     install_recommends: yes
   notify: restart docker
 

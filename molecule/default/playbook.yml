@@ -2,5 +2,7 @@
 - name: Converge
   hosts: all
   become: yes
+  vars:
+    docker_version: 18.03.0
   roles:
     - role: role-docker

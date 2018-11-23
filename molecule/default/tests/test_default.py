@@ -5,6 +5,8 @@ import testinfra.utils.ansible_runner
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
+DOCKER_VERSION = '18.03.0'
+
 
 def test_apt_repo(host):
     assert host.file(
@@ -30,3 +32,14 @@ def test_docker_hello_world(host):
 
 def test_docker_compose(host):
     assert not host.file("/usr/bin/docker-compose").exists
+
+
+def test_version_pinning(host):
+    f = host.file('/etc/apt/preferences.d/docker')
+
+    assert f.exists
+    assert f.user == 'root'
+    assert f.group == 'root'
+    assert f.mode == 0644
+
+    assert f.contains("Pin: version {}*".format(DOCKER_VERSION))
