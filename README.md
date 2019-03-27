@@ -2,6 +2,12 @@
 
 This role installs and configures Docker and Docker-Compose.
 
+Please note that you have to reboot your machine after installation for docker systemd service to start correctly.
+This is because docker needs some kernel modules (error in logs below).
+```
+gitlab-runner.example.com dockerd[1234]: level=warning msg="Your kernel does not support cgroup rt runtime"
+```
+
 # Example play
 
 ```yaml
