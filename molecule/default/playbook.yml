@@ -2,5 +2,7 @@
 - name: Converge
   hosts: all
   become: yes
+  vars:
+    docker_proxy: 'foo'
   roles:
     - role: role-docker
