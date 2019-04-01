@@ -1,1 +1,2 @@
 docker_compose_enabled: no
+docker_proxy: ''
