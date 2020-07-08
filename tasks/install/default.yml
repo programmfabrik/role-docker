@@ -7,15 +7,15 @@
 
 - name: Adding repository key
   apt_key:
-    url: https://download.docker.com/linux/{{ ansible_distribution.lower() }}/gpg
+    url: https://download.docker.com/linux/{{ ansible_lsb.id.lower() }}/gpg
     id: 0EBFCD88
 
 - name: Adding repository
   apt_repository:
     repo: >
       deb [arch=amd64]
-      https://download.docker.com/linux/{{ ansible_distribution.lower() }}
-      {{ ansible_distribution_release }}
+      https://download.docker.com/linux/{{ ansible_lsb.id.lower() }}
+      {{ ansible_lsb.codename }}
       stable
   notify: update apt caches
 

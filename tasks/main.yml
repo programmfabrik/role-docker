@@ -1,8 +1,8 @@
 - name: include distro vars
   include_vars: '{{ vars_item }}'
   with_first_found:
-    - "{{ ansible_distribution }}.{{ ansible_lsb.codename }}.yml"
-    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_lsb.id }}.{{ ansible_lsb.release }}.yml"
+    - "{{ ansible_lsb.id }}.yml"
     - "default.yml"
   loop_control:
     loop_var: vars_item
@@ -10,8 +10,8 @@
 - name: include distro installer
   include_tasks: "{{ distro_installer }}"
   with_first_found:
-    - "install/{{ ansible_distribution }}.{{ ansible_lsb.codename }}.yml"
-    - "install/{{ ansible_distribution }}.yml"
+    - "install/{{ ansible_lsb.id }}.{{ ansible_lsb.release }}.yml"
+    - "install/{{ ansible_lsb.id }}.yml"
     - "install/default.yml"
   loop_control:
     loop_var: distro_installer
@@ -19,8 +19,8 @@
 - name: include distro configurator
   include_tasks: "{{ distro_configurator }}"
   with_first_found:
-    - "configure/{{ ansible_distribution }}.{{ ansible_lsb.codename }}.yml"
-    - "configure/{{ ansible_distribution }}.yml"
+    - "configure/{{ ansible_lsb.id }}.{{ ansible_lsb.release }}.yml"
+    - "configure/{{ ansible_lsb.id }}.yml"
     - "configure/default.yml"
   loop_control:
     loop_var: distro_configurator
