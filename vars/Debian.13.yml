@@ -1,0 +1,2 @@
+# software-properties-common was removed from Debian with trixie (last in bookworm)
+docker_deps: [apt-transport-https, ca-certificates, curl, gnupg2]
