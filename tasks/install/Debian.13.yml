@@ -1,0 +1,40 @@
+# apt-key was removed in Debian 13, so the key goes into /etc/apt/keyrings
+# (shipped by apt itself) and the repository refers to it with signed-by.
+- name: Installing dependencies
+  apt:
+    pkg: "{{ docker_deps }}"
+    state: present
+    update_cache: no
+    install_recommends: no
+
+- name: Adding repository key
+  get_url:
+    url: https://download.docker.com/linux/{{ ansible_lsb.id.lower() }}/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Adding repository
+  apt_repository:
+    filename: docker
+    repo: >
+      deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc]
+      https://download.docker.com/linux/{{ ansible_lsb.id.lower() }}
+      {{ ansible_lsb.codename }}
+      stable
+  notify: update apt caches
+
+- meta: flush_handlers
+
+- name: Installing docker
+  apt:
+    pkg: docker-ce
+    update_cache: no
+    install_recommends: yes
+  notify: restart docker
+
+- name: Installing docker-compose
+  when: docker_compose_enabled
+  package:
+    name: docker-compose
